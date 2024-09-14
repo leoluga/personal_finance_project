@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Main Table Record</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Edit Record</h1>
+    <form action="{{ url_for('main_table.edit_record', record_id=record.record_id) }}" method="POST">
+        <label for="user_id">User:</label>
+        <select name="user_id" id="user_id" required>
+            {% for user in users %}
+            <option value="{{ user.user_id }}" {% if user.user_id == record.user_id %}selected{% endif %}>{{ user.username }}</option>
+            {% endfor %}
+        </select>
+        <br>
+
+        <label for="category_id">Category:</label>
+        <select name="category_id" id="category_id" required>
+            {% for category in categories %}
+            <option value="{{ category.category_id }}" {% if category.category_id == record.category_id %}selected{% endif %}>{{ category.category_name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+
+        <label for="sub_category_id">Sub Category:</label>
+        <select name="sub_category_id" id="sub_category_id" required>
+            {% for sub_category in sub_categories %}
+            <option value="{{ sub_category.sub_category_id }}" {% if sub_category.sub_category_id == record.sub_category_id %}selected{% endif %}>{{ sub_category.sub_category_name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+
+        <label for="payment_method_id">Payment Method:</label>
+        <select name="payment_method_id" id="payment_method_id" required>
+            {% for payment_method in payment_methods %}
+            <option value="{{ payment_method.payment_method_id }}" {% if payment_method.payment_method_id == record.payment_method_id %}selected{% endif %}>{{ payment_method.method_name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+
+        <label for="year">Year:</label>
+        <input type="number" name="year" value="{{ record.year }}" required>
+        <br>
+
+        <label for="month">Month:</label>
+        <input type="number" name="month" value="{{ record.month }}" required>
+        <br>
+
+        <label for="day">Day:</label>
+        <input type="number" name="day" value="{{ record.day }}">
+        <br>
+
+        <label for="value">Value:</label>
+        <input type="number" name="value" value="{{ record.value }}" required>
+        <br>
+
+        <label for="description">Description:</label>
+        <input type="text" name="description" value="{{ record.description }}">
+        <br>
+
+        <input type="submit" value="Update Record">
+    </form>
+
+    <!-- jQuery to fetch and populate payment methods based on the user selected -->
+    <script>
+        $(document).ready(function() {
+            $('#user_id').on('change', function() {
+                var user_id = $(this).val();
+                if (user_id) {
+                    $.ajax({
+                        url: '/main_table/get_payment_methods/' + user_id,  // Updated to include the blueprint prefix
+                        type: 'GET',
+                        success: function(data) {
+                            $('#payment_method_id').empty();
+                            $('#payment_method_id').append('<option value="">--Select Payment Method--</option>');
+                            $.each(data.payment_methods, function(key, value) {
+                                $('#payment_method_id').append('<option value="' + value.payment_method_id + '">' + value.method_name + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#payment_method_id').empty();
+                    $('#payment_method_id').append('<option value="">--Select Payment Method--</option>');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

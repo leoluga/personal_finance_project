@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main Table</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+</head>
+<body>
+    <a href="{{ url_for('main_table.add_record') }}">Add New Record</a>
+    <table class="styled-table" border="1">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Category</th>
+                <th>Sub Category</th>
+                <th>Year</th>
+                <th>Month</th>
+                <th>Day</th>
+                <th>Value</th>
+                <th>Payment Method</th>
+                <th>Description</th>
+                <th>Date Added</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for record in records %}
+            <tr>
+                <td>{{ record.user.username }}</td>
+                <td>{{ record.category.category_name }}</td>
+                <td>{{ record.sub_category.sub_category_name }}</td>
+                <td>{{ record.year }}</td>
+                <td>{{ record.month }}</td>
+                <td>{{ record.day }}</td>
+                <td>{{ record.value }}</td>
+                <td>{{ record.payment_method.method_name }}</td>
+                <td>{{ record.description }}</td>
+                <td>{{ record.date_added }}</td>
+                <td>
+                    <a href="{{ url_for('main_table.edit_record', record_id=record.record_id) }}">Edit</a> |
+                    <a href="{{ url_for('main_table.delete_record', record_id=record.record_id) }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+<a href="{{ url_for('index') }}">Back to Index</a>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add a New Record</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Add a New Record</h1>
+    <form action="{{ url_for('main_table.add_record') }}" method="POST">
+        <label for="user_id">User:</label>
+        <select name="user_id" id="user_id" required>
+            <option value="">--Select User--</option>
+            {% for user in users %}
+            <option value="{{ user.user_id }}">{{ user.username }}</option>
+            {% endfor %}
+        </select>
+        <br>
+
+        <label for="category_id">Category:</label>
+        <select name="category_id" id="category_id" required>
+            {% for category in categories %}
+            <option value="{{ category.category_id }}">{{ category.category_name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+
+        <label for="sub_category_id">Sub Category:</label>
+        <select name="sub_category_id" id="sub_category_id" required>
+            {% for sub_category in sub_categories %}
+            <option value="{{ sub_category.sub_category_id }}">{{ sub_category.sub_category_name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        
+        <label for="payment_method_id">Payment Method:</label>
+        <select name="payment_method_id" id="payment_method_id" required>
+            <option value="">--Select Payment Method--</option>
+        </select>
+        <br>
+
+        <label for="year">Year:</label>
+        <input type="number" name="year" required>
+        <br>
+
+        <label for="month">Month:</label>
+        <input type="number" name="month" required>
+        <br>
+
+        <label for="day">Day:</label>
+        <input type="number" name="day" required>
+        <br>
+
+        <label for="value">Value:</label>
+        <input type="number" step="0.01" name="value" required>
+        <br>
+
+        <label for="description">Description:</label>
+        <input type="text" name="description">
+        <br>
+
+        <input type="submit" value="Add Record">
+    </form>
+
+    <!-- jQuery to fetch and populate payment methods based on the user selected -->
+    <script>
+        $(document).ready(function() {
+            $('#user_id').on('change', function() {
+                var user_id = $(this).val();
+                if (user_id) {
+                    $.ajax({
+                        url: '/main_table/get_payment_methods/' + user_id,  // Updated to include the blueprint prefix
+                        type: 'GET',
+                        success: function(data) {
+                            $('#payment_method_id').empty();
+                            $('#payment_method_id').append('<option value="">--Select Payment Method--</option>');
+                            $.each(data.payment_methods, function(key, value) {
+                                $('#payment_method_id').append('<option value="' + value.payment_method_id + '">' + value.method_name + '</option>');
+                            });
+                        }
+                    });
+                } else {
+                    $('#payment_method_id').empty();
+                    $('#payment_method_id').append('<option value="">--Select Payment Method--</option>');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

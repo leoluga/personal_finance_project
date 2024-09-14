@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Payment Methods</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+</head>
+<body>
+    <h1>Payment Methods</h1>
+    <a href="{{ url_for('payment_methods.add_payment_method') }}">Add New Payment Method</a>
+    <table class="styled-table" border="1">
+        <thead>
+            <tr>
+                <th>Payment Method ID</th>
+                <th>Method Name</th>
+                <th>Bank Name</th>
+                <th>User</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payment_method in payment_methods %}
+            <tr>
+                <td>{{ payment_method.payment_method_id }}</td>
+                <td>{{ payment_method.method_name }}</td>
+                <td>{{ payment_method.bank_name }}</td>
+                <td>{{ payment_method.user.username }}</td>
+                <td>
+                    <a href="{{ url_for('payment_methods.edit_payment_method', payment_method_id=payment_method.payment_method_id) }}">Edit</a> |
+                    <a href="{{ url_for('payment_methods.delete_payment_method', payment_method_id=payment_method.payment_method_id) }}">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p><a href="{{ url_for('index') }}">Back to Main Page</a></p>
+</body>
+</html>

@@ -27,12 +27,15 @@
                 <td>{{ payment_method.user.username }}</td>
                 <td>
                     <a href="{{ url_for('payment_methods.edit_payment_method', payment_method_id=payment_method.payment_method_id) }}">Edit</a> |
-                    <a href="{{ url_for('payment_methods.delete_payment_method', payment_method_id=payment_method.payment_method_id) }}">Delete</a>
+                    <form action="{{ url_for('payment_methods.delete_payment_method', payment_method_id=payment_method.payment_method_id) }}" method="POST" class="custom-delete-form" onsubmit="return confirmDelete();">
+                        <button type="submit" class="custom-delete-button">Delete</button>
+                    </form>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     <p><a href="{{ url_for('index') }}">Back to Main Page</a></p>
+    <script src="{{ url_for('static', filename='js/global.js') }}"></script>
 </body>
 </html>

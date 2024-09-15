@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <title>{{ category.category_name }} - Subcategories</title>
+</head>
+<body>
+    <h1>Subcategories for {{ category.category_name }}</h1>
+    <a href="{{ url_for('categories.add_subcategory', category_id=category.category_id) }}">Add Subcategory</a>
+    <table class="styled-table">
+        <thead>
+            <tr>
+                <th>Subcategory Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for subcategory in subcategories %}
+            <tr>
+                <td>{{ subcategory.sub_category_name }}</td>
+                <td>
+                    <a href="{{ url_for('categories.edit_subcategory', category_id=category.category_id, sub_category_id=subcategory.sub_category_id) }}">Edit</a> |
+                    <form action="{{ url_for('categories.delete_subcategory', category_id=category.category_id, sub_category_id=subcategory.sub_category_id) }}" method="POST" style="display:inline;">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('categories.view_categories') }}">Back to Categories</a>
+</body>
+</html>

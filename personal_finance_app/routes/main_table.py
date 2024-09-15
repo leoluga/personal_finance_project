@@ -113,3 +113,65 @@ def get_payment_methods(user_id):
     payment_methods = db.session.query(PaymentMethod).filter_by(user_id=user_id).all()
     methods_list = [{'payment_method_id': pm.payment_method_id, 'method_name': pm.method_name} for pm in payment_methods]
     return jsonify({'payment_methods': methods_list})
+
+@main_table_bp.route('/get_sub_categories/<int:category_id>', methods=['GET'])
+def get_sub_categories(category_id):
+    sub_categories = db.session.query(SubCategory).filter_by(category_id=category_id).all()
+    sub_category_list = [{'sub_category_id': sc.sub_category_id, 'sub_category_name': sc.sub_category_name} for sc in sub_categories]
+    return jsonify({'sub_categories': sub_category_list})
+
+@main_table_bp.route('/add_multiple', methods=['GET', 'POST'])
+def add_multiple_records():
+    if request.method == 'POST':
+        # Loop through each record submitted
+        for i in range(len(request.form.getlist('user_id[]'))):
+            user_id = request.form.getlist('user_id[]')[i]
+            category_id = request.form.getlist('category_id[]')[i]
+            sub_category_id = request.form.getlist('sub_category_id[]')[i]
+            payment_method_id = request.form.getlist('payment_method_id[]')[i]
+            year = request.form.getlist('year[]')[i]
+            month = request.form.getlist('month[]')[i]
+            day = request.form.getlist('day[]')[i]
+            value = request.form.getlist('value[]')[i]
+            description = request.form.getlist('description[]')[i]
+            date_added = datetime.now().date()
+
+            # Retrieve related objects from the database
+            user = User.query.get(user_id)
+            category = Category.query.get(category_id)
+            sub_category = SubCategory.query.get(sub_category_id)
+            payment_method = PaymentMethod.query.get(payment_method_id)
+
+            # Validate that the IDs correspond to existing records
+            if not (user and category and sub_category and payment_method):
+                flash("Invalid IDs provided.")
+                continue
+
+            # Validate that the sub-category belongs to the category
+            if sub_category.category_id != category.category_id:
+                flash("Category ID does not match SubCategory's Category ID.")
+                continue
+
+            # Create and add the new record
+            new_record = MainTable(
+                user_id=user_id,
+                category_id=category_id,
+                sub_category_id=sub_category_id,
+                payment_method_id=payment_method_id,
+                year=year,
+                month=month,
+                day=day,
+                date_added=date_added,
+                value=value,
+                description=description
+            )
+            db.session.add(new_record)
+
+        db.session.commit()
+        flash("Records added successfully.")
+        return redirect(url_for('main_table.view_main_table'))
+
+    users = User.query.all()
+    categories = Category.query.all()
+    sub_categories = SubCategory.query.all()
+    return render_template('main_table/add_multiple_records.html', users=users, categories=categories, sub_categories=sub_categories)

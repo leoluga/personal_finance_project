@@ -6,7 +6,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
 </head>
 <body>
-    <a href="{{ url_for('main_table.add_record') }}">Add New Record</a>
+    <a href="{{ url_for('main_table.add_record') }}" class="custom-link">Add New Record</a>
+    <br> 
+    <a href="{{ url_for('main_table.add_multiple_records') }}" class="custom-link">Add Multiple Records</a>
     <table class="styled-table" border="1">
         <thead>
             <tr>
@@ -37,13 +39,16 @@
                 <td>{{ record.description }}</td>
                 <td>{{ record.date_added }}</td>
                 <td>
-                    <a href="{{ url_for('main_table.edit_record', record_id=record.record_id) }}">Edit</a> |
-                    <a href="{{ url_for('main_table.delete_record', record_id=record.record_id) }}">Delete</a>
+                    <a href="{{ url_for('main_table.edit_record', record_id=record.record_id) }}" class="custom-edit-link">Edit</a> |
+                    <form action="{{ url_for('main_table.delete_record', record_id=record.record_id) }}" method="POST" class="custom-delete-form" onsubmit="return confirmDelete();">
+                        <button type="submit" class="custom-delete-button">Delete</button>
+                    </form>                    
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-<a href="{{ url_for('index') }}">Back to Index</a>
+    <a href="{{ url_for('index') }}" class="custom-link">Back to Index</a>
+    <script src="{{ url_for('static', filename='js/global.js') }}"></script>
 </body>
 </html>

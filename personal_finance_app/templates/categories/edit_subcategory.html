@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
+    <title>Edit Subcategory</title>
+</head>
+<body>
+    <h1>Edit Subcategory</h1>
+    <form action="{{ url_for('categories.edit_subcategory', category_id=category_id, sub_category_id=subcategory.sub_category_id) }}" method="POST">
+        <label for="sub_category_name">Subcategory Name</label>
+        <input type="text" id="sub_category_name" name="sub_category_name" value="{{ subcategory.sub_category_name }}" required>
+        <button type="submit">Update</button>
+    </form>
+    <a href="{{ url_for('categories.view_category_subcategories', category_id=category_id) }}">Back to Subcategories</a>
+</body>
+</html>

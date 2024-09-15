@@ -1,15 +1,19 @@
 /* global.css - Styles applied across all pages */
 body {
     font-family: 'Helvetica Neue', Arial, sans-serif;
-    line-height: 1.6;  /* Increase line height for better readability */
-    margin: 0;
+    line-height: 1.6; 
+    margin: 2;
     padding: 0;
     background-color: #f8f9fa;  /* Lighter background */
     color: #333;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 p {
-    margin-bottom: 1.5em;  /* Add margin below paragraphs for spacing */
+    margin-bottom: 1.5em; 
 }
 
 h1 {
@@ -143,4 +147,100 @@ form label {
         font-weight: bold;
         text-align: left;
     }
+}
+
+
+/* Custom class for the navigation list */
+.custom-nav {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+    list-style-type: none; /* Removes the default bullet points */
+    padding: 0;
+    margin: 0;
+    /* background-color: rgba(1, 0, 0, 0.1); */
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.custom-nav li {
+    display: inline-block; /* Makes each list item inline */
+    margin-right: 10px;
+    background-color: #007bff;
+    border-radius: 3px;
+    align-items: center;
+    box-shadow: 0 6px 3px rgba(0, 0, 0, 0.1); 
+
+}
+
+.custom-nav li a {
+    display: block;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.custom-nav li a:hover {
+    background-color: #000076; 
+    color: rgb(0, 255, 251);
+    border-radius: 5px; 
+}
+
+/* Custom class for a styled anchor link */
+.custom-link {
+    display: inline-block; /* Makes the anchor behave like a block element */
+    padding: 10px 20px;
+    background-color: #007bff; 
+    color: white;
+    text-decoration: none; /* Removes the underline */
+    border-radius: 5px; /* Rounds the corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a shadow for a button-like effect */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+}
+
+.custom-link:hover {
+    background-color: #000076;
+    color: rgb(0, 255, 251);
+    border-radius: 5px; 
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Slightly larger shadow on hover */
+}
+
+.custom-link:active, .custom-link:focus {
+    outline: none; /* Remove focus outline */
+    background-color: #003f7f; /* Even darker blue for active state */
+}
+
+.custom-edit-link {
+    color: #002d14;
+    background-color: aquamarine;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px 10px;
+    border-radius: 3px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.custom-edit-link:hover {
+    background-color: #02c8ff;
+    color: #ffffff;
+}
+
+.custom-delete-form {
+    display: inline-block;
+}
+
+.custom-delete-button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.custom-delete-button:hover {
+    background-color: #c82333;
 }

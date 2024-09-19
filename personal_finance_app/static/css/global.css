@@ -118,7 +118,7 @@ form label {
 @media (max-width: 900px) {
     .styled-table {
         font-size: 0.8em;
-        min-width: 100%;
+        min-width: 300px;
     }
 
     .styled-table th,

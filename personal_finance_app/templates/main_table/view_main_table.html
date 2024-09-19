@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Main Table</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}">
 </head>
@@ -28,17 +29,17 @@
         <tbody>
             {% for record in records %}
             <tr>
-                <td>{{ record.user.username }}</td>
-                <td>{{ record.category.category_name }}</td>
-                <td>{{ record.sub_category.sub_category_name }}</td>
-                <td>{{ record.year }}</td>
-                <td>{{ record.month }}</td>
-                <td>{{ record.day }}</td>
-                <td>{{ record.value }}</td>
-                <td>{{ record.payment_method.method_name }}</td>
-                <td>{{ record.description }}</td>
-                <td>{{ record.date_added }}</td>
-                <td>
+                <td data-label="User">{{ record.user.username }}</td>
+                <td data-label="Category">{{ record.category.category_name }}</td>
+                <td data-label="Sub Category">{{ record.sub_category.sub_category_name }}</td>
+                <td data-label="Year">{{ record.year }}</td>
+                <td data-label="Month">{{ record.month }}</td>
+                <td data-label="Day">{{ record.day }}</td>
+                <td data-label="Value">{{ record.value }}</td>
+                <td data-label="Payment Method">{{ record.payment_method.method_name }}</td>
+                <td data-label="Description">{{ record.description }}</td>
+                <td data-label="Date Added">{{ record.date_added }}</td>
+                <td data-label="Actions">
                     <a href="{{ url_for('main_table.edit_record', record_id=record.record_id) }}" class="custom-edit-link">Edit</a> |
                     <form action="{{ url_for('main_table.delete_record', record_id=record.record_id) }}" method="POST" class="custom-delete-form" onsubmit="return confirmDelete();">
                         <button type="submit" class="custom-delete-button">Delete</button>

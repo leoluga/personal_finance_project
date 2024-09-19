@@ -4,7 +4,7 @@ body {
     line-height: 1.6; 
     margin: 2;
     padding: 0;
-    background-color: #f8f9fa;  /* Lighter background */
+    background-color: 	#f6eee3;  /* Lighter background */
     color: #333;
     display: flex;
     flex-direction: column;
@@ -114,41 +114,58 @@ form label {
     background-color: #d3fffb;
     cursor: pointer;
 }
-
-@media (max-width: 768px) {
+/* Media Query for Mobile */
+@media (max-width: 900px) {
     .styled-table {
         font-size: 0.8em;
         min-width: 100%;
+    }
+
+    .styled-table th,
+    .styled-table td {
+        padding: 12px 15px;
+        text-align: center; /* Centers content horizontally */
+        vertical-align: middle; /* Centers content vertically */
     }
 
     .styled-table thead {
         display: none;  /* Hide table headers on mobile */
     }
 
+
     .styled-table tbody tr {
         display: block;
         margin-bottom: 10px;
+        border-bottom: 2px solid #009879;
     }
 
     .styled-table tbody tr td {
-        display: block;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
         text-align: right;
         padding: 10px;
         border-bottom: 1px solid #dddddd;
         position: relative;
+        max-height: 0.5rem;
     }
 
     .styled-table tbody tr td::before {
         content: attr(data-label);
         position: absolute;
         left: 0;
-        top: 10px;
         padding-left: 10px;
         font-weight: bold;
         text-align: left;
+        top: 50%; 
+        transform: translateY(-50%); 
     }
-}
 
+    .styled-table tbody tr td:last-of-type {
+        border-bottom: 2px solid #009879;
+    }
+
+}
 
 /* Custom class for the navigation list */
 .custom-nav {
@@ -227,6 +244,7 @@ form label {
     color: #ffffff;
 }
 
+
 .custom-delete-form {
     display: inline-block;
 }
@@ -243,4 +261,14 @@ form label {
 
 .custom-delete-button:hover {
     background-color: #c82333;
+}
+
+@media (max-width: 900px) {
+    .custom-edit-link {
+        padding: 0.5px 10px;
+    }
+    .custom-delete-button {
+        padding: 3px 5px;
+    }
+    
 }
